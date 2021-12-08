@@ -6,7 +6,7 @@
 
 #### 提交命令记录
 
-token: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
+token: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
 
 #### 错误记录
 

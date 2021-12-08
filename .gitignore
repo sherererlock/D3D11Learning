@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Directory
+DX11Engine/.vs/
+DX11Engine/bin/
