@@ -36,6 +36,12 @@
     <ClCompile Include="src\modelclass.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\CameraClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphicsclass.h">
@@ -56,9 +62,17 @@
     <ClInclude Include="src\modelclass.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\CameraClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\Color.ps" />
     <None Include="shader\color.vs" />
+    <None Include="shader\Texture.ps" />
+    <None Include="shader\Texture.vs" />
   </ItemGroup>
 </Project>

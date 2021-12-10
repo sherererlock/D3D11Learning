@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CameraClass.cpp" />
     <ClCompile Include="src\Colorshaderclass.cpp" />
     <ClCompile Include="src\d3dclass.cpp" />
     <ClCompile Include="src\Graphicsclass.cpp" />
@@ -150,18 +151,23 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\modelclass.cpp" />
     <ClCompile Include="src\systemclass.cpp" />
+    <ClCompile Include="src\TextureClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CameraClass.h" />
     <ClInclude Include="src\ColorShaderClass.h" />
     <ClInclude Include="src\D3dclass.h" />
     <ClInclude Include="src\Graphicsclass.h" />
     <ClInclude Include="src\inputclass.h" />
     <ClInclude Include="src\modelclass.h" />
     <ClInclude Include="src\Systemclass.h" />
+    <ClInclude Include="src\TextureClass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\Color.ps" />
     <None Include="shader\color.vs" />
+    <None Include="shader\Texture.ps" />
+    <None Include="shader\Texture.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
