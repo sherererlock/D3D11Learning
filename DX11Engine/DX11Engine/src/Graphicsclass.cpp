@@ -10,6 +10,7 @@ GraphicsClass::GraphicsClass()
 	m_Camera = 0;
 	m_Model = 0;
 	m_ColorShader = 0;
+	m_Light = 0;
 }
 
 
@@ -61,7 +62,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(m_D3D->GetDevice(), L"./resource/pic0010.gif" );
+	result = m_Model->Initialize(m_D3D->GetDevice(), "./resource/cube.txt", L"./resource/seafloor.dds" );
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -83,12 +84,28 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	m_Light = new LightClass;
+	if (!m_Light)
+		return false;
+
+	// Initialize the light object.
+	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light->SetPosition(1.0f, 2.0f, -30.0f);
+	m_Light->SetIntensity(500.0f);
+
 	return true;
 }
 
 
 void GraphicsClass::Shutdown()
 {
+	// Release the light object.
+	if(m_Light)
+	{
+		delete m_Light;
+		m_Light = 0;
+	}
+
 	// Release the color shader object.
 	if (m_ColorShader)
 	{
@@ -126,9 +143,17 @@ void GraphicsClass::Shutdown()
 bool GraphicsClass::Frame()
 {
 	bool result;
+	static float rotation = 0.0f;
+
+	// Update the rotation variable each frame.
+	rotation += (float)D3DX_PI * 0.005f;
+	if(rotation > 360.0f)
+	{
+		rotation -= 360.0f;
+	}
 
 	// Render the graphics scene.
-	result = Render();
+	result = Render(rotation);
 	if (!result)
 	{
 		return false;
@@ -138,13 +163,13 @@ bool GraphicsClass::Frame()
 }
 
 
-bool GraphicsClass::Render()
+bool GraphicsClass::Render(float rotation)
 {
 	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix;
 	bool result;
 
 	// Clear the buffers to begin the scene.
-	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+	m_D3D->BeginScene(0.5f, 0.5f, 0.5f, 1.0f);
 
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
@@ -154,11 +179,14 @@ bool GraphicsClass::Render()
 	m_D3D->GetWorldMatrix(worldMatrix);
 	m_D3D->GetProjectionMatrix(projectionMatrix);
 
+	// Rotate the world matrix by the rotation value so that the triangle will spin.
+	D3DXMatrixRotationY(&worldMatrix, rotation);
+
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model->Render(m_D3D->GetDeviceContext());
 
 	// Render the model using the color shader.
-	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture());
+	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(), m_Light->GetPosition(), m_Light->GetDiffuseColor(), m_Light->GetIntensity());
 	if (!result)
 	{
 		return false;

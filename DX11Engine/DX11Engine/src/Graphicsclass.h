@@ -14,6 +14,7 @@
 #include "cameraclass.h"
 #include "modelclass.h"
 #include "colorshaderclass.h"
+#include "LightClass.h"
 
 /////////////
 // GLOBALS //
@@ -37,13 +38,14 @@ public:
 	bool Frame();
 
 private:
-	bool Render();
+	bool Render(float rotation);
 
 private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;
 	ModelClass* m_Model;
 	ColorShaderClass* m_ColorShader;
+	LightClass* m_Light;
 };
 
 #endif

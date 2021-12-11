@@ -148,6 +148,7 @@
     <ClCompile Include="src\d3dclass.cpp" />
     <ClCompile Include="src\Graphicsclass.cpp" />
     <ClCompile Include="src\inputclass.cpp" />
+    <ClCompile Include="src\LightClass.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\modelclass.cpp" />
     <ClCompile Include="src\systemclass.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\D3dclass.h" />
     <ClInclude Include="src\Graphicsclass.h" />
     <ClInclude Include="src\inputclass.h" />
+    <ClInclude Include="src\LightClass.h" />
     <ClInclude Include="src\modelclass.h" />
     <ClInclude Include="src\Systemclass.h" />
     <ClInclude Include="src\TextureClass.h" />
@@ -168,6 +170,9 @@
     <None Include="shader\color.vs" />
     <None Include="shader\Texture.ps" />
     <None Include="shader\Texture.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\cube.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

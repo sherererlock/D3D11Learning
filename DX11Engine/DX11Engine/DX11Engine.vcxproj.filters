@@ -42,6 +42,9 @@
     <ClCompile Include="src\TextureClass.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\LightClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphicsclass.h">
@@ -68,11 +71,17 @@
     <ClInclude Include="src\TextureClass.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\LightClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\Color.ps" />
     <None Include="shader\color.vs" />
     <None Include="shader\Texture.ps" />
     <None Include="shader\Texture.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\cube.txt" />
   </ItemGroup>
 </Project>
