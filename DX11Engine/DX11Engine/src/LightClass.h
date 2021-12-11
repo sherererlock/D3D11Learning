@@ -21,18 +21,27 @@ public:
 	LightClass(const LightClass&);
 	~LightClass();
 
+	void SetAmbientColor(float, float, float, float);
+	void SetSpecularColor(float, float, float, float);
 	void SetDiffuseColor(float, float, float, float);
 	void SetPosition(float, float, float);
 	void SetIntensity(float);
+	void SetSpecularPower(float);
 
+	D3DXVECTOR4 GetAmibientColor();
+	D3DXVECTOR4 GetSpecularColor();
 	D3DXVECTOR4 GetDiffuseColor();
 	D3DXVECTOR3 GetPosition();
 	float GetIntensity();
+	float GetSpecularPower();
 
 private:
+	D3DXVECTOR4 m_ambientColor;
+	D3DXVECTOR4 m_specularColor;
 	D3DXVECTOR4 m_diffuseColor;
 	D3DXVECTOR3 m_position;
 	float m_intensity;
+	float m_specularPower;
 };
 
 #endif

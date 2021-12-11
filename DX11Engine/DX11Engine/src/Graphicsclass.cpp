@@ -89,9 +89,11 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 
 	// Initialize the light object.
+	m_Light->SetAmbientColor(0.15f, 0.15f, 0.15f, 1.0f);
 	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetPosition(1.0f, 2.0f, -30.0f);
+	m_Light->SetPosition(10.0f, 20.0f, -20.0f);
 	m_Light->SetIntensity(500.0f);
+	m_Light->SetSpecularPower(500.0f);
 
 	return true;
 }
@@ -180,7 +182,7 @@ bool GraphicsClass::Render(float rotation)
 	m_D3D->GetProjectionMatrix(projectionMatrix);
 
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	//D3DXMatrixRotationY(&worldMatrix, rotation);
+	D3DXMatrixRotationY(&worldMatrix, rotation);
 	//D3DXMatrixRotationX(&worldMatrix, rotation);
 	//D3DXMatrixRotationZ(&worldMatrix, rotation);
 
@@ -190,7 +192,7 @@ bool GraphicsClass::Render(float rotation)
 	m_Model->Render(m_D3D->GetDeviceContext());
 
 	// Render the model using the color shader.
-	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(), m_Light->GetPosition(), m_Light->GetDiffuseColor(), m_Light->GetIntensity());
+	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(), m_Camera->GetPosition(), m_Light->GetPosition(), m_Light->GetAmibientColor(), m_Light->GetDiffuseColor(), m_Light->GetIntensity());
 	if (!result)
 	{
 		return false;

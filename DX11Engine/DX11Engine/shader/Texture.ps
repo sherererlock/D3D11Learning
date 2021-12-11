@@ -9,9 +9,17 @@ SamplerState SampleType;
 
 cbuffer LightBuffer
 {
+    float4 AmbientLightColor;
     float4 LightColor;
     float3 LightPosition;
     float LightIntensity;
+    // x for power
+    float4 SpecularPower;
+};
+
+cbuffer CameraBuffer
+{
+    float4 CameraPosition;
 };
 
 //////////////
@@ -34,16 +42,26 @@ struct PixelInputType
 // diffuse = Kd(I/r^2)(max(0, dot(n,l)))
 float4 ColorPixelShader(PixelInputType input) : SV_TARGET
 {
+    float4 color = AmbientLightColor;
     float4 textureColor;
 
     float3 lightdir = LightPosition - input.pos.xyz;
     float r2 = dot(lightdir,lightdir);
+
     lightdir = normalize(lightdir);
+
+    float4 diffuse = LightColor * LightIntensity / r2 * saturate(dot(input.normal, lightdir));
+
+    // specular = lightcolor * LightIntensity / r2 * (saturate(dot(reflect, viewDir)^p))
+    // h = (viewDir + LightDir)
+    // specular = lightcolor * LightIntensity / r2 * (saturate(dot(h, normal)^p))
+    float3 viewDir = CameraPosition.xyz - input.pos.xyz;
+    viewDir = normalize(viewDir);
+    float3 h = normalize(viewDir + lightdir);
+    float4 specular = LightColor * LightIntensity / r2 * pow(saturate(dot(h, input.normal)), SpecularPower.x);
 
     // Sample the pixel color from the texture using the sampler at this texture coordinate location.
     textureColor = shaderTexture.Sample(SampleType, input.uv);
 
-    float4 diffuse = LightColor * LightIntensity / r2 * saturate(dot(input.normal, lightdir));
-
-    return diffuse * textureColor;
+    return (specular + diffuse + color) * textureColor;
 }
