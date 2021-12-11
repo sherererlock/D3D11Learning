@@ -180,7 +180,11 @@ bool GraphicsClass::Render(float rotation)
 	m_D3D->GetProjectionMatrix(projectionMatrix);
 
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	D3DXMatrixRotationY(&worldMatrix, rotation);
+	//D3DXMatrixRotationY(&worldMatrix, rotation);
+	//D3DXMatrixRotationX(&worldMatrix, rotation);
+	//D3DXMatrixRotationZ(&worldMatrix, rotation);
+
+	D3DXMatrixRotationYawPitchRoll(&worldMatrix, rotation, rotation, rotation );
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model->Render(m_D3D->GetDeviceContext());
