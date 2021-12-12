@@ -48,6 +48,19 @@ public:
 	void TurnZBufferOn();
 	void TurnZBufferOff();
 
+	void TurnOnAlphaBlending();
+	void TurnOffAlphaBlending();
+
+	int GetScreenWidth() const
+	{
+		return m_screenWidth;
+	}
+
+	int GetScreenHeight() const
+	{
+		return m_screenHeight;
+	}
+
 private:
 	bool m_vsync_enabled;
 	int m_videoCardMemory;
@@ -65,6 +78,10 @@ private:
 	D3DXMATRIX m_orthoMatrix;
 
 	ID3D11DepthStencilState* m_depthDisabledStencilState;
+	ID3D11BlendState* m_alphaEnableBlendingState;
+	ID3D11BlendState* m_alphaDisableBlendingState;
+
+	int m_screenWidth, m_screenHeight;
 };
 
 #endif

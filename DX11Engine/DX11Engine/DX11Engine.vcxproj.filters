@@ -51,6 +51,15 @@
     <ClCompile Include="src\textureshaderclass.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\fontclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontshaderclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphicsclass.h">
@@ -84,6 +93,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\textureshaderclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontshaderclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textclass.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

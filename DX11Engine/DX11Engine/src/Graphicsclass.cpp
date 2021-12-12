@@ -10,8 +10,10 @@ GraphicsClass::GraphicsClass()
 	m_Camera = 0;
 	m_Model = 0;
 	m_ColorShader = 0;
+	m_TextureShader = 0;
 	m_Light = 0;
 	m_Bitmap = 0;
+	m_Text = 0;
 }
 
 
@@ -51,6 +53,13 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	{
 		return false;
 	}
+
+	D3DXMATRIX baseViewMatrix;
+
+	// Initialize a base view matrix with the camera for 2D user interface rendering.
+	m_Camera->SetPosition(0.0f, 0.0f, -1.0f);
+	m_Camera->Render();
+	m_Camera->GetViewMatrix(baseViewMatrix);
 
 	// Set the initial position of the camera.
 	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
@@ -96,8 +105,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Light->SetIntensity(500.0f);
 	m_Light->SetSpecularPower(500.0f);
 
-
-	
 	// Create the texture shader object.
 	m_TextureShader = new TextureShaderClass;
 	if(!m_TextureShader)
@@ -128,12 +135,35 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	// Create the text object.
+	m_Text = new TextClass;
+	if(!m_Text)
+	{
+		return false;
+	}
+
+	// Initialize the text object.
+	result = m_Text->Initialize(m_D3D->GetDevice(), m_D3D->GetDeviceContext(), hwnd, screenWidth, screenHeight, baseViewMatrix);
+	if(!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the text object.", L"Error", MB_OK);
+		return false;
+	}
+
 	return true;
 }
 
 
 void GraphicsClass::Shutdown()
 {
+	// Release the text object.
+	if(m_Text)
+	{
+		m_Text->Shutdown();
+		delete m_Text;
+		m_Text = 0;
+	}
+
 	// Release the bitmap object.
 	if(m_Bitmap)
 	{
@@ -255,7 +285,26 @@ bool GraphicsClass::Render(float rotation)
 	m_D3D->TurnZBufferOff();
 
 	// Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), 0, 0);
+
+	int posX = m_Bitmap->GetPosX();
+	int posY = m_Bitmap->GetPosY();
+	static int offset = 1;
+	if (posX + m_Bitmap->GetWidth() >= m_D3D->GetScreenWidth() || posY + m_Bitmap->GetHeight() >= m_D3D->GetScreenHeight())
+	{
+		offset = -1;
+		offset = -1;
+	}
+
+	if (posX <= 1 || posY <= 1)
+	{
+		offset = 1;
+		offset = 1;
+	}
+
+	posX += offset;
+	posY += offset;
+
+	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), posX, posY);
 	if(!result)
 	{
 		return false;
@@ -267,6 +316,25 @@ bool GraphicsClass::Render(float rotation)
 	{
 		return false;
 	}
+	// Turn the Z buffer back on now that all 2D rendering has completed.
+	m_D3D->TurnZBufferOn();
+
+		// Turn off the Z buffer to begin all 2D rendering.
+	m_D3D->TurnZBufferOff();
+
+	// Turn on the alpha blending before rendering the text.
+	m_D3D->TurnOnAlphaBlending();
+
+	// Render the text strings.
+	result = m_Text->Render(m_D3D->GetDeviceContext(), worldMatrix, orthoMatrix);
+	if(!result)
+	{
+		return false;
+	}
+
+	// Turn off alpha blending after rendering the text.
+	m_D3D->TurnOffAlphaBlending();
+
 	// Turn the Z buffer back on now that all 2D rendering has completed.
 	m_D3D->TurnZBufferOn();
 

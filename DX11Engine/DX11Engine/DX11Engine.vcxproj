@@ -147,12 +147,15 @@
     <ClCompile Include="src\CameraClass.cpp" />
     <ClCompile Include="src\Colorshaderclass.cpp" />
     <ClCompile Include="src\d3dclass.cpp" />
+    <ClCompile Include="src\fontclass.cpp" />
+    <ClCompile Include="src\fontshaderclass.cpp" />
     <ClCompile Include="src\Graphicsclass.cpp" />
     <ClCompile Include="src\inputclass.cpp" />
     <ClCompile Include="src\LightClass.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\modelclass.cpp" />
     <ClCompile Include="src\systemclass.cpp" />
+    <ClCompile Include="src\textclass.cpp" />
     <ClCompile Include="src\TextureClass.cpp" />
     <ClCompile Include="src\textureshaderclass.cpp" />
   </ItemGroup>
@@ -161,11 +164,14 @@
     <ClInclude Include="src\CameraClass.h" />
     <ClInclude Include="src\ColorShaderClass.h" />
     <ClInclude Include="src\D3dclass.h" />
+    <ClInclude Include="src\fontclass.h" />
+    <ClInclude Include="src\fontshaderclass.h" />
     <ClInclude Include="src\Graphicsclass.h" />
     <ClInclude Include="src\inputclass.h" />
     <ClInclude Include="src\LightClass.h" />
     <ClInclude Include="src\modelclass.h" />
     <ClInclude Include="src\Systemclass.h" />
+    <ClInclude Include="src\textclass.h" />
     <ClInclude Include="src\TextureClass.h" />
     <ClInclude Include="src\textureshaderclass.h" />
   </ItemGroup>

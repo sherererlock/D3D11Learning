@@ -43,6 +43,26 @@ public:
 	int GetIndexCount();
 	ID3D11ShaderResourceView* GetTexture();
 
+	int GetWidth() const
+	{
+		return m_bitmapWidth;
+	}
+
+	int GetHeight() const
+	{
+		return m_bitmapHeight;
+	}
+
+	int GetPosX() const
+	{
+		return m_previousPosX;
+	}
+
+	int GetPosY() const
+	{
+		return m_previousPosY;
+	}
+
 private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
