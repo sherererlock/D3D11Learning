@@ -15,6 +15,8 @@
 #include "modelclass.h"
 #include "colorshaderclass.h"
 #include "LightClass.h"
+#include "bitmapclass.h"
+#include "TextureShaderClass.h"
 
 /////////////
 // GLOBALS //
@@ -46,6 +48,9 @@ private:
 	ModelClass* m_Model;
 	ColorShaderClass* m_ColorShader;
 	LightClass* m_Light;
+	BitmapClass* m_Bitmap;
+
+	TextureShaderClass* m_TextureShader;
 };
 
 #endif

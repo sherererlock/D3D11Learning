@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BitmapClass.cpp" />
     <ClCompile Include="src\CameraClass.cpp" />
     <ClCompile Include="src\Colorshaderclass.cpp" />
     <ClCompile Include="src\d3dclass.cpp" />
@@ -153,8 +154,10 @@
     <ClCompile Include="src\modelclass.cpp" />
     <ClCompile Include="src\systemclass.cpp" />
     <ClCompile Include="src\TextureClass.cpp" />
+    <ClCompile Include="src\textureshaderclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BitmapClass.h" />
     <ClInclude Include="src\CameraClass.h" />
     <ClInclude Include="src\ColorShaderClass.h" />
     <ClInclude Include="src\D3dclass.h" />
@@ -164,6 +167,7 @@
     <ClInclude Include="src\modelclass.h" />
     <ClInclude Include="src\Systemclass.h" />
     <ClInclude Include="src\TextureClass.h" />
+    <ClInclude Include="src\textureshaderclass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\Color.ps" />

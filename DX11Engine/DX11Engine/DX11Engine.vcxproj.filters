@@ -45,6 +45,12 @@
     <ClCompile Include="src\LightClass.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\BitmapClass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textureshaderclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphicsclass.h">
@@ -72,6 +78,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\LightClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BitmapClass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textureshaderclass.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
