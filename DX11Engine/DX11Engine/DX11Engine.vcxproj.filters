@@ -60,6 +60,15 @@
     <ClCompile Include="src\textclass.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\cpuclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fpsclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timerclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphicsclass.h">
@@ -102,6 +111,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\textclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cpuclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fpsclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timerclass.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

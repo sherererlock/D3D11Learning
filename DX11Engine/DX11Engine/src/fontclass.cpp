@@ -164,7 +164,6 @@ void FontClass::BuildVertexArray(void* vertices, const char* sentence, float dra
 	VertexType* vertexPtr;
 	int numLetters, index, i, letter;
 
-
 	// Coerce the input vertices into a VertexType structure.
 	vertexPtr = (VertexType*)vertices;
 

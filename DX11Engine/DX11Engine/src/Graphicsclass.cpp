@@ -221,7 +221,7 @@ void GraphicsClass::Shutdown()
 }
 
 
-bool GraphicsClass::Frame()
+bool GraphicsClass::Frame(int fps, float cpuUsage, float time)
 {
 	bool result;
 	static float rotation = 0.0f;
@@ -231,6 +231,20 @@ bool GraphicsClass::Frame()
 	if(rotation > 360.0f)
 	{
 		rotation -= 360.0f;
+	}
+
+	// Set the frames per second.
+	result = m_Text->SetFps(fps, m_D3D->GetDeviceContext());
+	if (!result)
+	{
+		return false;
+	}
+
+	// Set the cpu usage.
+	result = m_Text->SetCpu(cpuUsage, m_D3D->GetDeviceContext());
+	if (!result)
+	{
+		return false;
 	}
 
 	// Render the graphics scene.
@@ -265,7 +279,7 @@ bool GraphicsClass::Render(float rotation)
 	//D3DXMatrixRotationX(&worldMatrix, rotation);
 	//D3DXMatrixRotationZ(&worldMatrix, rotation);
 
-	D3DXMatrixRotationYawPitchRoll(&worldMatrix, rotation, rotation, rotation );
+	//D3DXMatrixRotationYawPitchRoll(&worldMatrix, rotation, rotation, rotation );
 
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model->Render(m_D3D->GetDeviceContext());
@@ -286,25 +300,25 @@ bool GraphicsClass::Render(float rotation)
 
 	// Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
 
-	int posX = m_Bitmap->GetPosX();
-	int posY = m_Bitmap->GetPosY();
-	static int offset = 1;
-	if (posX + m_Bitmap->GetWidth() >= m_D3D->GetScreenWidth() || posY + m_Bitmap->GetHeight() >= m_D3D->GetScreenHeight())
-	{
-		offset = -1;
-		offset = -1;
-	}
+	//int posX = m_Bitmap->GetPosX();
+	//int posY = m_Bitmap->GetPosY();
+	//static int offset = 1;
+	//if (posX + m_Bitmap->GetWidth() >= m_D3D->GetScreenWidth() || posY + m_Bitmap->GetHeight() >= m_D3D->GetScreenHeight())
+	//{
+	//	offset = -1;
+	//	offset = -1;
+	//}
 
-	if (posX <= 1 || posY <= 1)
-	{
-		offset = 1;
-		offset = 1;
-	}
+	//if (posX <= 1 || posY <= 1)
+	//{
+	//	offset = 1;
+	//	offset = 1;
+	//}
 
-	posX += offset;
-	posY += offset;
+	//posX += offset;
+	//posY += offset;
 
-	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), posX, posY);
+	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), m_D3D->GetScreenWidth() - m_Bitmap->GetWidth(), 0);
 	if(!result)
 	{
 		return false;
