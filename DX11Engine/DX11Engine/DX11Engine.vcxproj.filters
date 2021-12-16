@@ -69,6 +69,15 @@
     <ClCompile Include="src\timerclass.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\frustumclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modellistclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\positionclass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphicsclass.h">
@@ -120,6 +129,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\timerclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\frustumclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modellistclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\positionclass.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
