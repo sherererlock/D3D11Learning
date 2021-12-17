@@ -40,20 +40,20 @@ public:
 	ModelClass(const ModelClass&);
 	~ModelClass();
 
-	bool Initialize(ID3D11Device*, const char* modelfilename, const WCHAR* filename);
+	bool Initialize(ID3D11Device*, const char* modelfilename, const WCHAR* filename1, const WCHAR* filename2 = nullptr );
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
 	int GetIndexCount();
 
-	ID3D11ShaderResourceView* GetTexture();
+	ID3D11ShaderResourceView* GetTexture(int i);
 
 private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
 
-	bool LoadTexture(ID3D11Device*, const WCHAR*);
+	TextureClass* LoadTexture(ID3D11Device*, const WCHAR*);
 	void ReleaseTexture();
 
 	bool LoadModel(const char*);
@@ -63,7 +63,7 @@ private:
 	ID3D11Buffer * m_vertexBuffer, * m_indexBuffer;
 	int m_vertexCount, m_indexCount;
 
-	TextureClass* m_texture;
+	TextureClass* m_textures[2];
 	ModelType* m_model;
 };
 

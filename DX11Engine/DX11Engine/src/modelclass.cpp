@@ -9,7 +9,8 @@ ModelClass::ModelClass()
 {
 	m_vertexBuffer = nullptr;
 	m_indexBuffer = nullptr;
-	m_texture = 0;
+	m_textures[0] = 0;
+	m_textures[1] = 0;
 }
 
 ModelClass::ModelClass(const ModelClass& other)
@@ -21,7 +22,7 @@ ModelClass::~ModelClass()
 {
 }
 
-bool ModelClass::Initialize(ID3D11Device * device, const char* modelfilename, const WCHAR* filename)
+bool ModelClass::Initialize(ID3D11Device * device, const char* modelfilename, const WCHAR* filename1, const WCHAR* filename2)
 {
 	bool result;
 
@@ -39,10 +40,24 @@ bool ModelClass::Initialize(ID3D11Device * device, const char* modelfilename, co
 	}
 
 	// Load the texture for this model.
-	result = LoadTexture(device, filename);
-	if(!result)
+	TextureClass* tex = LoadTexture(device, filename1);
+	if(!tex)
 	{
 		return false;
+	}
+
+	m_textures[0] = tex;
+
+	if (filename2 != nullptr)
+	{
+		// Load the texture for this model.
+		tex = LoadTexture(device, filename2);
+		if (!result)
+		{
+			return false;
+		}
+
+		m_textures[1] = tex;
 	}
 
 	return true;
@@ -74,9 +89,11 @@ int ModelClass::GetIndexCount()
 	return m_indexCount;
 }
 
-ID3D11ShaderResourceView* ModelClass::GetTexture()
+ID3D11ShaderResourceView* ModelClass::GetTexture(int i)
 {
-	return m_texture->GetTexture();
+	if (i > 1)
+		return nullptr;
+	return m_textures[i]->GetTexture();
 }
 
 bool ModelClass::InitializeBuffers(ID3D11Device * device)
@@ -182,7 +199,6 @@ bool ModelClass::InitializeBuffers(ID3D11Device * device)
 	return true;
 }
 
-
 void ModelClass::ShutdownBuffers()
 {
 	// Release the index buffer.
@@ -223,35 +239,38 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 	return;
 }
 
-bool ModelClass::LoadTexture(ID3D11Device* device, const WCHAR* filename)
+TextureClass* ModelClass::LoadTexture(ID3D11Device* device, const WCHAR* filename)
 {
 	bool result;
 
 	// Create the texture object.
-	m_texture = new TextureClass;
-	if(!m_texture)
+	TextureClass* texture = new TextureClass;
+	if(!texture)
 	{
-		return false;
+		return nullptr;
 	}
 
 	// Initialize the texture object.
-	result = m_texture->Initialize(device, filename);
+	result = texture->Initialize(device, filename);
 	if(!result)
 	{
-		return false;
+		return nullptr;
 	}
 
-	return true;
+	return texture;
 }
 
 void ModelClass::ReleaseTexture()
 {
 	// Release the texture object.
-	if(m_texture)
+
+	for (int i = 0; i < 2; i++)
 	{
-		m_texture->Shutdown();
-		delete m_texture;
-		m_texture = 0;
+		if (m_textures[i] != nullptr)
+		{
+			m_textures[i]->Shutdown();
+			delete m_textures[i];
+		}
 	}
 
 	return;

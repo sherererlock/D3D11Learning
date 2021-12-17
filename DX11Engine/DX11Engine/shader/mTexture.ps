@@ -1,0 +1,71 @@
+
+////////////////////////////////////////////////////////////////////////////////
+// Filename: texture.ps
+////////////////////////////////////////////////////////////////////////////////
+#pragma enable_d3d11_debug_symbols
+
+Texture2D shaderTexture[2];
+SamplerState SampleType;
+
+cbuffer LightBuffer
+{
+    float4 AmbientLightColor;
+    float4 LightColor;
+    float3 LightPosition;
+    float LightIntensity;
+    // x for power
+    float4 SpecularPower;
+};
+
+cbuffer CameraBuffer
+{
+    float4 CameraPosition;
+};
+
+//////////////
+// TYPEDEFS //
+//////////////
+struct PixelInputType
+{
+    float4 position : SV_POSITION;
+    float4 pos : POSITION;
+    float3 normal : NORMAL;
+    float4 color : COLOR;
+    float2 uv : TEXCOORD0;
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Pixel Shader
+////////////////////////////////////////////////////////////////////////////////
+
+// diffuse = Kd(I/r^2)(max(0, dot(n,l)))
+float4 ColorPixelShader(PixelInputType input) : SV_TARGET
+{
+    float4 color = AmbientLightColor;
+    float4 textureColor;
+
+    float3 lightdir = LightPosition - input.pos.xyz;
+    float r2 = dot(lightdir,lightdir);
+
+    lightdir = normalize(lightdir);
+
+    float4 diffuse = LightColor * LightIntensity / r2 * saturate(dot(input.normal, lightdir));
+
+    // specular = lightcolor * LightIntensity / r2 * (saturate(dot(reflect, viewDir)^p))
+    // h = (viewDir + LightDir)
+    // specular = lightcolor * LightIntensity / r2 * (saturate(dot(h, normal)^p))
+    float3 viewDir = CameraPosition.xyz - input.pos.xyz;
+    viewDir = normalize(viewDir);
+    float3 h = normalize(viewDir + lightdir);
+    float4 specular = LightColor * LightIntensity / r2 * pow(saturate(dot(h, input.normal)), SpecularPower.x);
+
+    // Sample the pixel color from the texture using the sampler at this texture coordinate location.
+
+    float color1 = shaderTexture[0].Sample(SampleType, input.uv);
+    float color2 = shaderTexture[1].Sample(SampleType, input.uv);
+
+    textureColor = saturate(color1 * color2 * 2.0);
+
+    return (specular + diffuse + color) * textureColor;
+}

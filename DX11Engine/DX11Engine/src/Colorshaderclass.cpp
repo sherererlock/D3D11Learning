@@ -30,7 +30,7 @@ bool ColorShaderClass::Initialize(ID3D11Device * device, HWND hwnd)
 	bool result;
 
 	// Initialize the vertex and pixel shaders.
-	result = InitializeShader(device, hwnd, L"./shader/texture.vs", L"./shader/texture.ps");
+	result = InitializeShader(device, hwnd, L"./shader/mtexture.vs", L"./shader/mtexture.ps");
 	if (!result)
 	{
 		return false;
@@ -48,7 +48,7 @@ void ColorShaderClass::Shutdown()
 }
 
 bool ColorShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, D3DXMATRIX worldMatrix,
-	D3DXMATRIX viewMatrix, D3DXMATRIX projectionMatrix, ID3D11ShaderResourceView* texture,D3DXVECTOR3 cameraPos, D3DXVECTOR3 lightPos, D3DXVECTOR4 ambientColor, D3DXVECTOR4 lightColor, float intensity)
+	D3DXMATRIX viewMatrix, D3DXMATRIX projectionMatrix, ID3D11ShaderResourceView** texture,D3DXVECTOR3 cameraPos, D3DXVECTOR3 lightPos, D3DXVECTOR4 ambientColor, D3DXVECTOR4 lightColor, float intensity)
 {
 	bool result;
 
@@ -349,7 +349,7 @@ void ColorShaderClass::OutputShaderErrorMessage(ID3D10Blob * errorMessage, HWND 
 }
 
 bool ColorShaderClass::SetShaderParameters(ID3D11DeviceContext * deviceContext, D3DXMATRIX worldMatrix,
-	D3DXMATRIX viewMatrix, D3DXMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, D3DXVECTOR3 cameraPos, D3DXVECTOR3 lightPosition, D3DXVECTOR4 ambientColor, D3DXVECTOR4 lightColor, float intensity)
+	D3DXMATRIX viewMatrix, D3DXMATRIX projectionMatrix, ID3D11ShaderResourceView** texarray, D3DXVECTOR3 cameraPos, D3DXVECTOR3 lightPosition, D3DXVECTOR4 ambientColor, D3DXVECTOR4 lightColor, float intensity)
 {
 	HRESULT result;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -388,7 +388,7 @@ bool ColorShaderClass::SetShaderParameters(ID3D11DeviceContext * deviceContext, 
 	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
 
 	// Set shader texture resource in the pixel shader.
-	deviceContext->PSSetShaderResources(0, 1, &texture);
+	deviceContext->PSSetShaderResources(0, 2, texarray);
 
 	// Lock the constant buffer so it can be written to.
 	result = deviceContext->Map(m_lightBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);

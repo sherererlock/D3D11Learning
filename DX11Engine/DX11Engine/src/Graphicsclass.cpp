@@ -72,7 +72,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(m_D3D->GetDevice(), "./resource/sphere.txt", L"./resource/seafloor.dds" );
+	result = m_Model->Initialize(m_D3D->GetDevice(), "./resource/sphere.txt", L"./resource/dirt01.dds", L"./resource/stone01.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -174,7 +174,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 	return true;
 }
-
 
 void GraphicsClass::Shutdown()
 {
@@ -360,9 +359,12 @@ bool GraphicsClass::Render(float rotation)
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 			m_Model->Render(m_D3D->GetDeviceContext());
 
+			ID3D11ShaderResourceView* textures[2];
+			textures[0] = m_Model->GetTexture(0);
+			textures[1] = m_Model->GetTexture(1);
 			// Render the model using the light shader.
 			m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
-			m_Model->GetTexture(), m_Camera->GetPosition(), m_Light->GetPosition(), color, m_Light->GetDiffuseColor(), m_Light->GetIntensity());
+				textures, m_Camera->GetPosition(), m_Light->GetPosition(), color, m_Light->GetDiffuseColor(), m_Light->GetIntensity());
 
 			// Reset to the original world matrix.
 			m_D3D->GetWorldMatrix(worldMatrix);

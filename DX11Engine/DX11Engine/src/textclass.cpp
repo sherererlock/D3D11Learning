@@ -83,7 +83,6 @@ bool TextClass::SetCpu(int cpu, ID3D11DeviceContext* deviceContext)
 	char cpuString[16];
 	bool result;
 
-
 	// Convert the cpu integer to string format.
 	_itoa_s(cpu, tempString, 10);
 
